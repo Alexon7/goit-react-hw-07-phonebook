@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import { Wrapper, Input, Label, Button } from './ContactForm.styled';
+import { selectContacts } from 'redux/selectors';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const ContactForm = () => {
   // let name = '';
   // let number = '';
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const inputChange = event => {
     if (event.target.name === 'name') {
@@ -20,7 +20,7 @@ export const ContactForm = () => {
     }
     if (event.target.name === 'number') {
       // number = event.target.value;
-      setNumber(event.target.value);
+      setPhone(event.target.value);
     }
   };
 
@@ -32,8 +32,7 @@ export const ContactForm = () => {
     }
     const contact = {
       name,
-      number,
-      id: nanoid(),
+      phone,
     };
 
     const isAtList = contacts.find(
