@@ -4,8 +4,9 @@ import { deleteContact } from 'redux/operations';
 import { selectExistingContacts } from 'redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(selectExistingContacts);
   const dispatch = useDispatch();
+  const contacts = useSelector(selectExistingContacts);
+
   if (!contacts) return;
 
   return (

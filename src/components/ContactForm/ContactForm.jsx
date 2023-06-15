@@ -6,30 +6,23 @@ import { selectContacts } from 'redux/selectors';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const contacts = useSelector(selectContacts);
 
-  // let name = '';
-  // let number = '';
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
   const inputChange = event => {
     if (event.target.name === 'name') {
-      // name = event.target.value;
       setName(event.target.value);
     }
-    if (event.target.name === 'number') {
-      // number = event.target.value;
+    if (event.target.name === 'phone') {
       setPhone(event.target.value);
     }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (name.trim() === '') {
-      alert('Please enter a name');
-      return;
-    }
+
     const contact = {
       name,
       phone,
@@ -38,10 +31,17 @@ export const ContactForm = () => {
     const isAtList = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
+
     if (isAtList) {
       alert('Already in list');
       return;
     }
+
+    if (name.trim() === '') {
+      alert('Please enter a name');
+      return;
+    }
+
     dispatch(addContact(contact));
     event.target.reset();
   };
@@ -53,7 +53,8 @@ export const ContactForm = () => {
         <Input
           type="text"
           name="name"
-          pattern="^[a-zA-Z\s]+$"
+          // pattern="^[a-zA-Z\s]+$"
+          pattern="^[А-Яа-яЁёa-zA-Z\s]+$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           onChange={inputChange}
@@ -64,7 +65,8 @@ export const ContactForm = () => {
         <Input
           type="tel"
           name="number"
-          pattern="^[0-9]+$"
+          // pattern="^[0-9]+$"
+          pattern="\+?[0-9\s\-\(\)]+"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           onChange={inputChange}

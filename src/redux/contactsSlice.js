@@ -31,13 +31,11 @@ const contactsSlice = createSlice({
       state.error = null;
       state.contacts = action.payload;
     },
-
     [addContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
       state.contacts.push(action.payload);
     },
-
     [deleteContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
